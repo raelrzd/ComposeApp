@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -48,11 +50,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 1000)
+@Preview(showBackground = true)
 @Composable
 fun ProductsSection() {
-    Column(Modifier.padding(16.dp)) {
+    Column(Modifier.padding(top = 16.dp, bottom = 16.dp)) {
         Text(
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 16.dp
+            ),
             text = "Promoções",
             fontSize = 20.sp,
             fontWeight = FontWeight(400)
@@ -60,7 +66,9 @@ fun ProductsSection() {
         Row(
             Modifier
                 .padding(top = 8.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ProductItem()
