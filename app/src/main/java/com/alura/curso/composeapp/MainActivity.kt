@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,17 +49,31 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeAppTheme {
-                ProductsSection()
-            }
+            App()
         }
     }
 }
 
-@Preview(showBackground = true)
+@Composable
+fun App() {
+    ComposeAppTheme {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            ProductsSection()
+            ProductsSection()
+            ProductsSection()
+        }
+    }
+}
+
 @Composable
 fun ProductsSection() {
-    Column(Modifier.padding(top = 16.dp, bottom = 16.dp)) {
+    Column {
         Text(
             modifier = Modifier.padding(
                 start = 16.dp,
@@ -152,6 +168,19 @@ fun ProductItem(product: Product) {
     }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+private fun AppPreview() {
+    App()
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductsSectionPreview() {
+    ComposeAppTheme {
+        ProductsSection()
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
