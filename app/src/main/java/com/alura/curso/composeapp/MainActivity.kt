@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,18 +28,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alura.curso.composeapp.extensions.toBrazilianCurrency
+import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import com.alura.curso.composeapp.ui.theme.Purple500
 import com.alura.curso.composeapp.ui.theme.Teal200
+import java.math.BigDecimal
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,21 +75,38 @@ fun ProductsSection() {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            ProductItem()
-            ProductItem()
-            ProductItem()
+            ProductItem(
+                Product(
+                    name = "Hamburguer",
+                    price = BigDecimal("19.99"),
+                    image = R.drawable.burger
+                )
+            )
+            ProductItem(
+                Product(
+                    name = "Pizza",
+                    price = BigDecimal("29.99"),
+                    image = R.drawable.pizza
+                )
+            )
+            ProductItem(
+                Product(
+                    name = "Batata Frita",
+                    price = BigDecimal("14.99"),
+                    image = R.drawable.fries
+                )
+            )
         }
     }
 }
 
 @Composable
-fun ProductItem() {
+fun ProductItem(product: Product) {
     Surface(shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
         Column(
             Modifier
                 .heightIn(250.dp, 300.dp)
                 .widthIn(200.dp, 250.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             val imageSize = 100.dp
             Box(
@@ -104,40 +122,32 @@ fun ProductItem() {
                     .fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = painterResource(id = product.image),
                     contentDescription = null,
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
-                        .align(Alignment.BottomCenter)
+                        .align(Alignment.BottomCenter),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier = Modifier.height(imageSize / 2))
             Column(Modifier.padding(16.dp)) {
                 Text(
-                    text = LoremIpsum(50).values.first(),
+                    text = product.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight(700),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "R$ 14,99",
+                    text = product.price.toBrazilianCurrency(),
                     Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
                 )
             }
-            Spacer(Modifier.height(25.dp))
-            Text(
-                modifier = Modifier
-                    .background(Color.Blue)
-                    .padding(25.dp),
-                text = LoremIpsum(50).values.first(),
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
         }
     }
 }
@@ -147,6 +157,12 @@ fun ProductItem() {
 @Composable
 private fun ProductItemPreview() {
     ComposeAppTheme {
-        ProductItem()
+        ProductItem(
+            Product(
+                name = LoremIpsum(50).values.first(),
+                price = BigDecimal("14.99"),
+                image = R.drawable.ic_launcher_background
+            )
+        )
     }
 }
