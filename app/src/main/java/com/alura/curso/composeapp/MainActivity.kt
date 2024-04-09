@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -85,6 +88,7 @@ fun ProductItem() {
             Modifier
                 .heightIn(250.dp, 300.dp)
                 .widthIn(200.dp, 250.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             val imageSize = 100.dp
             Box(
@@ -125,6 +129,15 @@ fun ProductItem() {
                     fontWeight = FontWeight(400)
                 )
             }
+            Spacer(Modifier.height(25.dp))
+            Text(
+                modifier = Modifier
+                    .background(Color.Blue)
+                    .padding(25.dp),
+                text = LoremIpsum(50).values.first(),
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
         }
     }
 }
