@@ -24,7 +24,7 @@ fun App() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun AppPreview() {
     App()
