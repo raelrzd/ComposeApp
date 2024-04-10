@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -22,7 +23,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alura.curso.composeapp.sampledata.sampleProducts
 import com.alura.curso.composeapp.sampledata.sampleSections
+import com.alura.curso.composeapp.ui.components.CardProductItem
 import com.alura.curso.composeapp.ui.components.ProductsSection
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
@@ -49,16 +52,21 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            sections.forEach { section ->
-                val title = section.key
-                val products = section.value
-                item {
-                    ProductsSection(
-                        title = title,
-                        products = products
-                    )
-                }
+
+            items(sampleProducts) { product ->
+                CardProductItem(product = product)
             }
+
+//            sections.forEach { section ->
+//                val title = section.key
+//                val products = section.value
+//                item {
+//                    ProductsSection(
+//                        title = title,
+//                        products = products
+//                    )
+//                }
+//            }
         }
     }
 }
