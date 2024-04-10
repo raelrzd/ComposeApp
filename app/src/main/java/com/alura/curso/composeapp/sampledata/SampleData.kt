@@ -1,5 +1,6 @@
 package com.alura.curso.composeapp.sampledata
 
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.alura.curso.composeapp.ui.model.Product
 import java.math.BigDecimal
 
@@ -8,6 +9,7 @@ val sampleCandies = listOf(
         name = "Chocolate",
         price = BigDecimal("3.99"),
         image = "https://images.pexels.com/photos/65882/chocolate-dark-coffee-confiserie-65882.jpeg",
+        description = LoremIpsum(50).values.first()
     ),
     Product(
         name = "Sorvete",
@@ -30,7 +32,8 @@ val sampleDrinks = listOf(
     Product(
         name = "Refrigerante",
         price = BigDecimal("4.99"),
-        image = "https://images.pexels.com/photos/2775860/pexels-photo-2775860.jpeg"
+        image = "https://images.pexels.com/photos/2775860/pexels-photo-2775860.jpeg",
+        description = LoremIpsum(20).values.first()
     ),
     Product(
         name = "Suco",
@@ -40,7 +43,8 @@ val sampleDrinks = listOf(
     Product(
         name = "Água",
         price = BigDecimal("2.99"),
-        image = "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg"
+        image = "https://images.pexels.com/photos/327090/pexels-photo-327090.jpeg",
+        description = LoremIpsum(30).values.first()
     )
 )
 
@@ -48,7 +52,8 @@ val sampleProducts: List<Product> = listOf(
     Product(
         name = "Hamburguer",
         price = BigDecimal("12.99"),
-        image = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"
+        image = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg",
+        description = LoremIpsum(50).values.first()
     ),
     Product(
         name = "Pizza",
@@ -58,7 +63,8 @@ val sampleProducts: List<Product> = listOf(
     Product(
         name = "Batata frita",
         price = BigDecimal("7.99"),
-        image = "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg"
+        image = "https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg",
+        description = LoremIpsum(10).values.first()
     ), *sampleDrinks.toTypedArray(), *sampleCandies.toTypedArray()
 )
 
