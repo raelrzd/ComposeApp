@@ -1,6 +1,5 @@
 package com.alura.curso.composeapp.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,10 +37,10 @@ import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import java.math.BigDecimal
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(product: Product, modifier: Modifier = Modifier) {
     Surface(shape = RoundedCornerShape(15.dp), shadowElevation = 4.dp) {
         Column(
-            Modifier
+            modifier
                 .heightIn(250.dp, 300.dp)
                 .widthIn(200.dp, 250.dp)
         ) {

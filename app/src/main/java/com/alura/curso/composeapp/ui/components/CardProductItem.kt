@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,10 +28,11 @@ import com.alura.curso.composeapp.ui.theme.Indigo400Light
 @Composable
 fun CardProductItem(
     product: Product,
+    modifier: Modifier = Modifier,
     elevation: Dp = 4.dp,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .heightIn(150.dp),
         elevation = CardDefaults.cardElevation(elevation)

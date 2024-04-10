@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.alura.curso.composeapp.sampledata.sampleProducts
 import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.components.CardProductItem
-import com.alura.curso.composeapp.ui.components.ProductsSection
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
@@ -38,8 +37,7 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
             value = text,
             onValueChange = { text = it },
             Modifier
-                .padding(top = 16.dp)
-                .padding(horizontal = 16.dp)
+                .padding(16.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(100),
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
@@ -50,11 +48,11 @@ fun HomeScreen(sections: Map<String, List<Product>>) {
             Modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
 
             items(sampleProducts) { product ->
-                CardProductItem(product = product)
+                CardProductItem(product = product, Modifier.padding(horizontal = 16.dp))
             }
 
 //            sections.forEach { section ->

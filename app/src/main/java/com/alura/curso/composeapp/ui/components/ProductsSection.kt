@@ -20,8 +20,8 @@ import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
 @Composable
-fun ProductsSection(title: String, products: List<Product>) {
-    Column {
+fun ProductsSection(title: String, products: List<Product>, modifier: Modifier = Modifier) {
+    Column(modifier) {
         Text(
             modifier = Modifier.padding(
                 start = 16.dp,
