@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
     ComposeAppTheme {
-        HomeScreen()
+        HomeScreen(sampleSections)
     }
 }
 

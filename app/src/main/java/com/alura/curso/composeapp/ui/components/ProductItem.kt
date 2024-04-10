@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +34,6 @@ import com.alura.curso.composeapp.R
 import com.alura.curso.composeapp.extensions.toBrazilianCurrency
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
-import com.alura.curso.composeapp.ui.theme.Purple500
-import com.alura.curso.composeapp.ui.theme.Teal200
 import java.math.BigDecimal
 
 @Composable
@@ -52,14 +51,15 @@ fun ProductItem(product: Product) {
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Purple500, Teal200
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary
                             )
                         )
                     )
                     .fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = product.image),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = null,
                     Modifier
                         .size(imageSize)
@@ -93,12 +93,13 @@ fun ProductItem(product: Product) {
 @Composable
 private fun ProductItemPreview() {
     ComposeAppTheme {
-        ProductItem(
-            Product(
-                name = LoremIpsum(50).values.first(),
-                price = BigDecimal("14.99"),
-                image = R.drawable.placeholder
+        Surface {
+            ProductItem(
+                Product(
+                    name = LoremIpsum(50).values.first(),
+                    price = BigDecimal("14.99")
+                )
             )
-        )
+        }
     }
 }
