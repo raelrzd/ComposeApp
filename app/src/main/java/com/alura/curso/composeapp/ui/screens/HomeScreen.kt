@@ -34,6 +34,14 @@ import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
     Column {
         var text by remember { mutableStateOf(searchText) }
+        val filterProducts = remember(text) {
+            if (text.isNotBlank()) {
+                sampleProducts.filter { product ->
+                    product.name.contains(text, ignoreCase = true)
+                            || product.description?.contains(text, ignoreCase = true) ?: false
+                }
+            } else emptyList()
+        }
         OutlinedTextField(
             value = text,
             onValueChange = { text = it },
@@ -63,7 +71,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
                     }
                 }
             } else {
-                items(sampleProducts) { product ->
+                items(filterProducts) { product ->
                     CardProductItem(product = product, Modifier.padding(horizontal = 16.dp))
                 }
             }
@@ -86,7 +94,7 @@ private fun HomeScreenPreview() {
 private fun HomeScreenWithSearchTextPreview() {
     ComposeAppTheme {
         Surface {
-            HomeScreen(sampleSections, searchText = "a")
+            HomeScreen(sampleSections, searchText = "pizza")
         }
     }
 }
