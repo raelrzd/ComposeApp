@@ -8,13 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +21,7 @@ import com.alura.curso.composeapp.sampledata.sampleProducts
 import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.components.CardProductItem
 import com.alura.curso.composeapp.ui.components.ProductsSection
+import com.alura.curso.composeapp.ui.components.SearchTextField
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
@@ -42,16 +37,10 @@ fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
                 }
             } else emptyList()
         }
-        OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
-            Modifier
+        SearchTextField(
+            searchText = text, onSearchChange = { text = it }, Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(100),
-            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-            label = { Text(text = "Produto") },
-            placeholder = { Text(text = "O que você procura?") }
+                .fillMaxWidth()
         )
         LazyColumn(
             Modifier
