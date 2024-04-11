@@ -1,6 +1,7 @@
 package com.alura.curso.composeapp.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
+import java.math.BigDecimal
 
 class ProductFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +96,20 @@ fun ProductFormScreen() {
         )
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                val convertedPrice = try {
+                    BigDecimal(price)
+                } catch (e: NumberFormatException) {
+                    BigDecimal.ZERO
+                }
+                val newProduct = Product(
+                    name = name,
+                    price = convertedPrice,
+                    image = url,
+                    description = description
+                )
+                Log.i("ProductFormScreen", "Product: $newProduct ")
+            },
             Modifier.fillMaxWidth()
         ) {
             Text(text = "Salvar")
