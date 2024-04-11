@@ -1,4 +1,4 @@
-package com.alura.curso.composeapp
+package com.alura.curso.composeapp.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

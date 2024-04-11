@@ -15,7 +15,13 @@
         android:theme="@style/Theme.ComposeApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ComposeApp">
+        </activity>
+        <activity
+            android:name=".ui.activities.ProductFormActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ComposeApp">
