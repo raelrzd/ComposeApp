@@ -87,7 +87,19 @@ private fun CardProductItemPreview() {
     ComposeAppTheme {
         Surface {
             CardProductItem(
-                product = sampleProducts.random(),
+                product = sampleProducts[1],
+            )
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun CardProductItemWithDescriptionPreview() {
+    ComposeAppTheme {
+        Surface {
+            CardProductItem(
+                product = sampleProducts[0],
             )
         }
     }
