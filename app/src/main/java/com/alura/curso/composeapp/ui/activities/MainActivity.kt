@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.sampledata.sampleCandies
 import com.alura.curso.composeapp.sampledata.sampleDrinks
-import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 

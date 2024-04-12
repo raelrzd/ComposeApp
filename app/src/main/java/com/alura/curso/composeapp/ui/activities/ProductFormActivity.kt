@@ -33,18 +33,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.alura.curso.composeapp.R
+import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import java.math.BigDecimal
-import java.text.DecimalFormat
 
 class ProductFormActivity : ComponentActivity() {
+
+    private val dao = ProductDao()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeAppTheme {
                 Surface {
-                    ProductFormScreen()
+                    ProductFormScreen(onClickSave = { product ->
+                        dao.save(product)
+                        finish()
+                    })
                 }
             }
         }
@@ -52,7 +58,7 @@ class ProductFormActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProductFormScreen() {
+fun ProductFormScreen(onClickSave: (Product) -> Unit = {}) {
     Column(
         Modifier
             .fillMaxSize()
@@ -175,6 +181,7 @@ fun ProductFormScreen() {
                     description = description
                 )
                 Log.i("ProductFormScreen", "Product: $newProduct ")
+                onClickSave(newProduct)
             },
             Modifier.fillMaxWidth()
         ) {
