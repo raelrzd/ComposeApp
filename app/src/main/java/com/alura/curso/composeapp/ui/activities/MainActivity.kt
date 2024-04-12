@@ -15,17 +15,33 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.alura.curso.composeapp.dao.ProductDao
+import com.alura.curso.composeapp.sampledata.sampleCandies
+import com.alura.curso.composeapp.sampledata.sampleDrinks
 import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val dao = ProductDao()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App(
                 onClickFab = {
                     startActivity(Intent(this, ProductFormActivity::class.java))
+                },
+                content = {
+                    val sections = mapOf(
+                        "Todos produtos" to dao.products(),
+                        "Promoções" to sampleDrinks + sampleCandies,
+                        "Doces" to sampleCandies,
+                        "Bebidas" to sampleDrinks
+                    )
+                    HomeScreen(sections = sections)
+//                    AllProductsScreen(sampleProducts)
                 }
             )
         }
@@ -33,7 +49,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(onClickFab: () -> Unit = {}) {
+fun App(onClickFab: () -> Unit = {}, content: @Composable () -> Unit = {}) {
     ComposeAppTheme {
         Surface {
             Scaffold(floatingActionButton = {
@@ -42,8 +58,7 @@ fun App(onClickFab: () -> Unit = {}) {
                 }
             }) { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {
-                    HomeScreen(sampleSections)
-//                    AllProductsScreen(sampleProducts)
+                    content()
                 }
             }
         }
