@@ -25,20 +25,31 @@ import com.alura.curso.composeapp.ui.components.SearchTextField
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
+class HomeScreenStateHolder(searchText: String = "") {
+
+    var text by mutableStateOf(searchText)
+
+    val filterProducts
+        get() = if (text.isNotBlank()) {
+            sampleProducts.filter { product ->
+                product.name.contains(text, ignoreCase = true)
+                        || product.description?.contains(text, ignoreCase = true) ?: false
+            }
+        } else emptyList()
+
+    fun isShowSections(): Boolean {
+        return text.isBlank()
+    }
+
+}
+
 @Composable
 fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
+    val stateHolder = remember { HomeScreenStateHolder(searchText) }
+    val filterProducts = remember(stateHolder.text) { stateHolder.filterProducts }
     Column {
-        var text by remember { mutableStateOf(searchText) }
-        val filterProducts = remember(text) {
-            if (text.isNotBlank()) {
-                sampleProducts.filter { product ->
-                    product.name.contains(text, ignoreCase = true)
-                            || product.description?.contains(text, ignoreCase = true) ?: false
-                }
-            } else emptyList()
-        }
         SearchTextField(
-            searchText = text, onSearchChange = { text = it }, Modifier
+            searchText = stateHolder.text, onSearchChange = { stateHolder.text = it }, Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         )
@@ -48,7 +59,7 @@ fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-            if (text.isBlank()) {
+            if (stateHolder.isShowSections()) {
                 sections.forEach { section ->
                     val title = section.key
                     val products = section.value

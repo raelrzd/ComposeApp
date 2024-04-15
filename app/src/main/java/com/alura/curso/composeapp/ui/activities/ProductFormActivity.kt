@@ -112,12 +112,8 @@ fun ProductFormScreen(onClickSave: (Product) -> Unit = {}) {
             )
         )
 
-        var price by remember {
-            mutableStateOf("")
-        }
-        var isPriceError by remember {
-            mutableStateOf(false)
-        }
+        var price by remember { mutableStateOf("") }
+        var isPriceError by remember { mutableStateOf(false) }
         Column {
             TextField(
                 value = price,
