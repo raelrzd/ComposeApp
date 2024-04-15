@@ -28,6 +28,7 @@ import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 class HomeScreenStateHolder(searchText: String = "") {
 
     var text by mutableStateOf(searchText)
+        private set
 
     val filterProducts
         get() = if (text.isNotBlank()) {
@@ -41,15 +42,23 @@ class HomeScreenStateHolder(searchText: String = "") {
         return text.isBlank()
     }
 
+    val onSearchChange: (String) -> Unit = { searchText ->
+        text = searchText
+    }
+
 }
 
 @Composable
-fun HomeScreen(sections: Map<String, List<Product>>, searchText: String = "") {
-    val stateHolder = remember { HomeScreenStateHolder(searchText) }
+fun HomeScreen(
+    sections: Map<String, List<Product>>,
+    stateHolder: HomeScreenStateHolder = HomeScreenStateHolder(),
+) {
     val filterProducts = remember(stateHolder.text) { stateHolder.filterProducts }
     Column {
         SearchTextField(
-            searchText = stateHolder.text, onSearchChange = { stateHolder.text = it }, Modifier
+            searchText = stateHolder.text,
+            onSearchChange = { stateHolder.onSearchChange(it) },
+            Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         )
@@ -94,7 +103,7 @@ private fun HomeScreenPreview() {
 private fun HomeScreenWithSearchTextPreview() {
     ComposeAppTheme {
         Surface {
-            HomeScreen(sampleSections, searchText = "pizza")
+            HomeScreen(sampleSections, stateHolder = HomeScreenStateHolder(searchText = "pizza"))
         }
     }
 }

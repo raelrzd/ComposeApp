@@ -13,12 +13,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.sampledata.sampleCandies
 import com.alura.curso.composeapp.sampledata.sampleDrinks
 import com.alura.curso.composeapp.ui.screens.HomeScreen
+import com.alura.curso.composeapp.ui.screens.HomeScreenStateHolder
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,7 +41,8 @@ class MainActivity : ComponentActivity() {
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks
                     )
-                    HomeScreen(sections = sections)
+                    val homeScreenStateHolder = remember { HomeScreenStateHolder() }
+                    HomeScreen(sections = sections, stateHolder = homeScreenStateHolder)
 //                    AllProductsScreen(sampleProducts)
                 }
             )
