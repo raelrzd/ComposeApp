@@ -27,6 +27,7 @@ import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
 class HomeScreenStateHolder(
     val sections: Map<String, List<Product>> = mutableMapOf(),
+    private val products: List<Product> = emptyList(),
     searchText: String = "",
 ) {
 
@@ -35,11 +36,14 @@ class HomeScreenStateHolder(
 
     val filterProducts
         get() = if (text.isNotBlank()) {
-            sampleProducts.filter { product ->
-                product.name.contains(text, ignoreCase = true)
-                        || product.description?.contains(text, ignoreCase = true) ?: false
-            }
+            sampleProducts.filter(containsInNameOrDescription()) +
+                    products.filter(containsInNameOrDescription())
         } else emptyList()
+
+    private fun containsInNameOrDescription() = { product: Product ->
+        product.name.contains(text, ignoreCase = true)
+                || product.description?.contains(text, ignoreCase = true) ?: false
+    }
 
     fun isShowSections(): Boolean {
         return text.isBlank()
