@@ -25,7 +25,10 @@ import com.alura.curso.composeapp.ui.components.SearchTextField
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
-class HomeScreenStateHolder(searchText: String = "") {
+class HomeScreenStateHolder(
+    val sections: Map<String, List<Product>> = mutableMapOf(),
+    searchText: String = "",
+) {
 
     var text by mutableStateOf(searchText)
         private set
@@ -50,9 +53,9 @@ class HomeScreenStateHolder(searchText: String = "") {
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>,
     stateHolder: HomeScreenStateHolder = HomeScreenStateHolder(),
 ) {
+    val sections = stateHolder.sections
     val filterProducts = remember(stateHolder.text) { stateHolder.filterProducts }
     Column {
         SearchTextField(
@@ -93,7 +96,7 @@ fun HomeScreen(
 private fun HomeScreenPreview() {
     ComposeAppTheme {
         Surface {
-            HomeScreen(sampleSections)
+            HomeScreen(HomeScreenStateHolder(sections = sampleSections))
         }
     }
 }
@@ -103,7 +106,12 @@ private fun HomeScreenPreview() {
 private fun HomeScreenWithSearchTextPreview() {
     ComposeAppTheme {
         Surface {
-            HomeScreen(sampleSections, stateHolder = HomeScreenStateHolder(searchText = "pizza"))
+            HomeScreen(
+                stateHolder = HomeScreenStateHolder(
+                    sections = sampleSections,
+                    searchText = "pizza"
+                )
+            )
         }
     }
 }

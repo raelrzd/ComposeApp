@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.sampledata.sampleCandies
 import com.alura.curso.composeapp.sampledata.sampleDrinks
+import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
 import com.alura.curso.composeapp.ui.screens.HomeScreenStateHolder
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
@@ -41,8 +42,8 @@ class MainActivity : ComponentActivity() {
                         "Doces" to sampleCandies,
                         "Bebidas" to sampleDrinks
                     )
-                    val homeScreenStateHolder = remember { HomeScreenStateHolder() }
-                    HomeScreen(sections = sections, stateHolder = homeScreenStateHolder)
+                    val homeScreenStateHolder = remember(sections) { HomeScreenStateHolder(sections = sections) }
+                    HomeScreen(stateHolder = homeScreenStateHolder)
 //                    AllProductsScreen(sampleProducts)
                 }
             )
@@ -70,5 +71,7 @@ fun App(onClickFab: () -> Unit = {}, content: @Composable () -> Unit = {}) {
 @Preview(showBackground = true)
 @Composable
 private fun AppPreview() {
-    App()
+    App {
+        HomeScreen(HomeScreenStateHolder(sections = sampleSections))
+    }
 }
