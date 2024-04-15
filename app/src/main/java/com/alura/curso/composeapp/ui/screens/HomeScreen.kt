@@ -10,14 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.alura.curso.composeapp.sampledata.sampleProducts
 import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.components.CardProductItem
 import com.alura.curso.composeapp.ui.components.ProductsSection
@@ -27,30 +22,13 @@ import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 
 class HomeScreenStateHolder(
     val sections: Map<String, List<Product>> = mutableMapOf(),
-    private val products: List<Product> = emptyList(),
-    searchText: String = "",
+    val filterProducts: List<Product> = emptyList(),
+    val searchText: String = "",
+    val onSearchChange: (String) -> Unit = {},
 ) {
 
-    var text by mutableStateOf(searchText)
-        private set
-
-    val filterProducts
-        get() = if (text.isNotBlank()) {
-            sampleProducts.filter(containsInNameOrDescription()) +
-                    products.filter(containsInNameOrDescription())
-        } else emptyList()
-
-    private fun containsInNameOrDescription() = { product: Product ->
-        product.name.contains(text, ignoreCase = true)
-                || product.description?.contains(text, ignoreCase = true) ?: false
-    }
-
     fun isShowSections(): Boolean {
-        return text.isBlank()
-    }
-
-    val onSearchChange: (String) -> Unit = { searchText ->
-        text = searchText
+        return searchText.isBlank()
     }
 
 }
@@ -60,10 +38,10 @@ fun HomeScreen(
     stateHolder: HomeScreenStateHolder = HomeScreenStateHolder(),
 ) {
     val sections = stateHolder.sections
-    val filterProducts = remember(stateHolder.text) { stateHolder.filterProducts }
+    val filterProducts = stateHolder.filterProducts
     Column {
         SearchTextField(
-            searchText = stateHolder.text,
+            searchText = stateHolder.searchText,
             onSearchChange = { stateHolder.onSearchChange(it) },
             Modifier
                 .padding(16.dp)
