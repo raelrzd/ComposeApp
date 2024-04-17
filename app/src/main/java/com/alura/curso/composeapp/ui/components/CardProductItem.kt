@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -36,8 +35,9 @@ fun CardProductItem(
     product: Product,
     modifier: Modifier = Modifier,
     elevation: Dp = 4.dp,
+    isExpanded: Boolean = false,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(isExpanded) }
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -68,20 +68,20 @@ fun CardProductItem(
                     text = product.price.toBrazilianCurrency()
                 )
             }
-            product.description?.let {
-                Text(
-                    text = it,
-                    Modifier
-                        .padding(16.dp),
-                    maxLines = if (!expanded) 2 else Int.MAX_VALUE,
-                    overflow = if (!expanded) TextOverflow.Ellipsis else TextOverflow.Visible
-                )
+            if (expanded) {
+                product.description?.let {
+                    Text(
+                        text = it,
+                        Modifier
+                            .padding(16.dp)
+                    )
+                }
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CardProductItemPreview() {
     ComposeAppTheme {
@@ -93,13 +93,14 @@ private fun CardProductItemPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CardProductItemWithDescriptionPreview() {
     ComposeAppTheme {
         Surface {
             CardProductItem(
                 product = sampleProducts[0],
+                isExpanded = true
             )
         }
     }
