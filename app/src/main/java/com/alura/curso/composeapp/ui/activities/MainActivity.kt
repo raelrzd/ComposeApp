@@ -16,16 +16,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
-import com.alura.curso.composeapp.ui.screens.HomeScreenStateHolder
+import com.alura.curso.composeapp.ui.uiStates.HomeScreenUiState
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import com.alura.curso.composeapp.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-
-    private val dao = ProductDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +32,8 @@ class MainActivity : ComponentActivity() {
                     startActivity(Intent(this, ProductFormActivity::class.java))
                 },
                 content = {
-                    val products = dao.products()
                     val viewModel by viewModels<HomeScreenViewModel>()
-                    HomeScreen(viewModel = viewModel, products = products)
-//                    AllProductsScreen(sampleProducts)
+                    HomeScreen(viewModel = viewModel)
                 }
             )
         }
@@ -66,6 +61,6 @@ fun App(onClickFab: () -> Unit = {}, content: @Composable () -> Unit = {}) {
 @Composable
 private fun AppPreview() {
     App {
-        HomeScreen(HomeScreenStateHolder(sections = sampleSections))
+        HomeScreen(HomeScreenUiState(sections = sampleSections))
     }
 }
