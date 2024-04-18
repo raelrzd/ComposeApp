@@ -1,6 +1,5 @@
 package com.alura.curso.composeapp.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,10 +15,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -32,76 +29,37 @@ import coil.compose.AsyncImage
 import com.alura.curso.composeapp.R
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
-import java.math.BigDecimal
-
-class ProductFormScreenStateHolder(
-    val url: String = "",
-    val name: String = "",
-    val price: String = "",
-    val description: String = "",
-    var isPriceError: Boolean = false,
-    val onUrlChange: (String) -> Unit = {},
-    val onNameChange: (String) -> Unit = {},
-    val onPriceChange: (String) -> Unit = {},
-    val onDescriptionChange: (String) -> Unit = {},
-    val onClickSave: () -> Unit = {},
-) {
-    fun urlIsNotBlank(): Boolean {
-        return url.isNotBlank()
-    }
-}
-
-@Composable
-fun ProductFormScreen(onClickSave: (Product) -> Unit = {}) {
-    var url by rememberSaveable { mutableStateOf("") }
-
-    var name by rememberSaveable { mutableStateOf("") }
-
-    var price by rememberSaveable { mutableStateOf("") }
-    var isPriceError by rememberSaveable { mutableStateOf(false) }
-
-    var description by rememberSaveable { mutableStateOf("") }
-
-    val productFormScreenStateHolder = ProductFormScreenStateHolder(
-        url = url,
-        name = name,
-        price = price,
-        description = description,
-        isPriceError = isPriceError,
-        onUrlChange = { url = it },
-        onNameChange = { name = it },
-        onPriceChange = {
-            isPriceError = try {
-                BigDecimal(it)
-                false
-            } catch (e: IllegalArgumentException) {
-                it.isNotEmpty()
-            }
-            price = it
-        },
-        onDescriptionChange = { description = it },
-        onClickSave = {
-            val convertedPrice = try {
-                BigDecimal(price)
-            } catch (e: NumberFormatException) {
-                BigDecimal.ZERO
-            }
-            val newProduct = Product(
-                name = name,
-                price = convertedPrice,
-                image = url,
-                description = description
-            )
-            Log.i("ProductFormScreen", "Product: $newProduct ")
-            onClickSave(newProduct)
-        }
-    )
-    ProductFormScreen(stateHolder = productFormScreenStateHolder)
-}
+import com.alura.curso.composeapp.ui.uiStates.ProductFormScreenUiState
+import com.alura.curso.composeapp.ui.viewmodels.ProductFormScreenViewModel
 
 @Composable
 fun ProductFormScreen(
-    stateHolder: ProductFormScreenStateHolder = ProductFormScreenStateHolder(),
+    viewModel: ProductFormScreenViewModel = ProductFormScreenViewModel(),
+    onClickSave: (Product) -> Unit = {},
+) {
+    val state by viewModel.uiStateHolder.collectAsState()
+    ProductFormScreen(stateHolder = state)
+}
+
+//onClickSave = {
+//    val convertedPrice = try {
+//        BigDecimal(price)
+//    } catch (e: NumberFormatException) {
+//        BigDecimal.ZERO
+//    }
+//    val newProduct = Product(
+//        name = name,
+//        price = convertedPrice,
+//        image = url,
+//        description = description
+//    )
+//    Log.i("ProductFormScreen", "Product: $newProduct ")
+//    onClickSave(newProduct)
+//}
+
+@Composable
+fun ProductFormScreen(
+    stateHolder: ProductFormScreenUiState = ProductFormScreenUiState(),
 ) {
     Column(
         Modifier
