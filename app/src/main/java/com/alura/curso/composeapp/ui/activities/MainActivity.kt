@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import com.alura.curso.composeapp.sampledata.sampleSections
 import com.alura.curso.composeapp.ui.screens.HomeScreen
 import com.alura.curso.composeapp.ui.screens.HomeScreenStateHolder
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
+import com.alura.curso.composeapp.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -34,7 +36,8 @@ class MainActivity : ComponentActivity() {
                 },
                 content = {
                     val products = dao.products()
-                    HomeScreen(products = products)
+                    val viewModel by viewModels<HomeScreenViewModel>()
+                    HomeScreen(viewModel = viewModel, products = products)
 //                    AllProductsScreen(sampleProducts)
                 }
             )

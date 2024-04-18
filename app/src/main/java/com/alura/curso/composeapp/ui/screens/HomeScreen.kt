@@ -27,6 +27,7 @@ import com.alura.curso.composeapp.ui.components.ProductsSection
 import com.alura.curso.composeapp.ui.components.SearchTextField
 import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
+import com.alura.curso.composeapp.ui.viewmodels.HomeScreenViewModel
 
 class HomeScreenStateHolder(
     val sections: Map<String, List<Product>> = mutableMapOf(),
@@ -40,7 +41,7 @@ class HomeScreenStateHolder(
 }
 
 @Composable
-fun HomeScreen(products: List<Product>) {
+fun HomeScreen(viewModel: HomeScreenViewModel, products: List<Product>) {
     val sections = mapOf(
         "Todos produtos" to products,
         "Promoções" to sampleDrinks + sampleCandies,
@@ -62,14 +63,15 @@ fun HomeScreen(products: List<Product>) {
         } else emptyList()
     }
 
-    val homeScreenStateHolder = remember(products, text) {
-        HomeScreenStateHolder(
-            sections = sections,
-            filterProducts = filterProducts,
-            searchText = text,
-            onSearchChange = { text = it }
-        )
-    }
+    val homeScreenStateHolder = viewModel.uiStateHolder
+//    val homeScreenStateHolder = remember(products, text) {
+//        HomeScreenStateHolder(
+//            sections = sections,
+//            filterProducts = filterProducts,
+//            searchText = text,
+//            onSearchChange = { text = it }
+//        )
+//    }
     HomeScreen(stateHolder = homeScreenStateHolder)
 }
 
