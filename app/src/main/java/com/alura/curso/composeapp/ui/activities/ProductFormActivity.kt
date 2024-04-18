@@ -7,14 +7,11 @@ import androidx.activity.viewModels
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.alura.curso.composeapp.dao.ProductDao
 import com.alura.curso.composeapp.ui.screens.ProductFormScreen
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import com.alura.curso.composeapp.ui.viewmodels.ProductFormScreenViewModel
 
 class ProductFormActivity : ComponentActivity() {
-
-    private val dao = ProductDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +21,7 @@ class ProductFormActivity : ComponentActivity() {
                     val viewModel: ProductFormScreenViewModel by viewModels()
                     ProductFormScreen(
                         viewModel = viewModel,
-                        onClickSave = { product ->
-                            dao.save(product)
-                            finish()
-                        }
+                        onClickSave = { finish() }
                     )
                 }
             }
@@ -40,7 +34,7 @@ class ProductFormActivity : ComponentActivity() {
 private fun ProductFormActivityPreview() {
     ComposeAppTheme {
         Surface {
-            ProductFormScreen(onClickSave = {})
+            ProductFormScreen(viewModel = ProductFormScreenViewModel(), onClickSave = {})
         }
     }
 }

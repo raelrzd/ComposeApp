@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.alura.curso.composeapp.R
-import com.alura.curso.composeapp.ui.model.Product
 import com.alura.curso.composeapp.ui.theme.ComposeAppTheme
 import com.alura.curso.composeapp.ui.uiStates.ProductFormScreenUiState
 import com.alura.curso.composeapp.ui.viewmodels.ProductFormScreenViewModel
@@ -35,31 +34,22 @@ import com.alura.curso.composeapp.ui.viewmodels.ProductFormScreenViewModel
 @Composable
 fun ProductFormScreen(
     viewModel: ProductFormScreenViewModel = ProductFormScreenViewModel(),
-    onClickSave: (Product) -> Unit = {},
+    onClickSave: () -> Unit = {},
 ) {
     val state by viewModel.uiStateHolder.collectAsState()
-    ProductFormScreen(stateHolder = state)
+    ProductFormScreen(
+        stateHolder = state,
+        onClickSave = {
+            viewModel.save()
+            onClickSave()
+        }
+    )
 }
-
-//onClickSave = {
-//    val convertedPrice = try {
-//        BigDecimal(price)
-//    } catch (e: NumberFormatException) {
-//        BigDecimal.ZERO
-//    }
-//    val newProduct = Product(
-//        name = name,
-//        price = convertedPrice,
-//        image = url,
-//        description = description
-//    )
-//    Log.i("ProductFormScreen", "Product: $newProduct ")
-//    onClickSave(newProduct)
-//}
 
 @Composable
 fun ProductFormScreen(
     stateHolder: ProductFormScreenUiState = ProductFormScreenUiState(),
+    onClickSave: () -> Unit,
 ) {
     Column(
         Modifier
@@ -152,7 +142,7 @@ fun ProductFormScreen(
         )
 
         Button(
-            onClick = { stateHolder.onClickSave() },
+            onClick = { onClickSave() },
             Modifier.fillMaxWidth()
         ) {
             Text(text = "Salvar")
@@ -165,7 +155,7 @@ fun ProductFormScreen(
 private fun ProductFormScreenPreview() {
     ComposeAppTheme {
         Surface {
-            ProductFormScreen(onClickSave = {})
+            ProductFormScreen(viewModel = ProductFormScreenViewModel(), onClickSave = {})
         }
     }
 }

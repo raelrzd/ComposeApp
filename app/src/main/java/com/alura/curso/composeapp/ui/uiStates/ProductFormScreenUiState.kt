@@ -10,7 +10,6 @@ data class ProductFormScreenUiState(
     val onNameChange: (String) -> Unit = {},
     val onPriceChange: (String) -> Unit = {},
     val onDescriptionChange: (String) -> Unit = {},
-    val onClickSave: () -> Unit = {},
 ) {
     fun urlIsNotBlank(): Boolean {
         return url.isNotBlank()
